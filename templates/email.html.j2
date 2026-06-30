@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body style="margin:0;background:#f5f7fa;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1b2530;line-height:1.5">
+  <div style="max-width:640px;margin:0 auto;padding:0 16px 40px">
+
+    <div style="background:#0f2747;color:#fff;border-radius:0 0 10px 10px;padding:22px 20px;margin-bottom:22px">
+      <div style="letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:#ff7a18;font-weight:700">BoomRx Industry Watch</div>
+      <div style="font-size:21px;font-weight:700;margin-top:4px">Daily News Digest</div>
+      <div style="color:#aab8cc;font-size:13px;margin-top:6px">{{ date_str }} · {{ total }} stories</div>
+    </div>
+
+    {% if watch %}
+    <div style="background:#fff8f1;border:1px solid #ffd9b3;border-left:4px solid #ff7a18;border-radius:10px;padding:12px 16px;margin-bottom:20px">
+      <div style="font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#b85c00;font-weight:700;margin-bottom:8px">&#9888; Standing Watch List</div>
+      {% for w in watch %}
+      <div style="padding:6px 0;border-top:1px dashed #ffe0c2">
+        <div style="font-weight:700;color:#0f2747;font-size:13.5px">{{ w.label }}</div>
+        {% if w.note %}<div style="color:#5a4636;font-size:12.5px;margin-top:2px">{{ w.note }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% for g in groups %}
+    <div style="font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:#0f2747;border-left:4px solid #ff7a18;padding-left:10px;margin:26px 0 12px;font-weight:700">{{ g.category }}</div>
+      {% for it in g["items"] %}
+      <div style="background:#fff;border:1px solid #e7ebf0;border-radius:10px;padding:13px 15px;margin-bottom:10px">
+        <a href="{{ it.link }}" style="color:#0f2747;font-weight:600;text-decoration:none;font-size:15px">{{ it.title }}</a>
+        {% if it.summary %}<div style="color:#33414f;margin-top:5px;font-size:14px">{{ it.summary }}</div>{% endif %}
+        <div style="margin-top:7px;font-size:12px;color:#6b7785"><span style="font-weight:600;color:#16335c">{{ it.source }}</span> · {{ "●" * (it.score or 0) }}</div>
+      </div>
+      {% endfor %}
+    {% endfor %}
+
+    {% if not groups %}
+    <div style="background:#fff;border:1px dashed #e7ebf0;border-radius:10px;padding:24px;text-align:center;color:#6b7785">No new stories cleared the relevance filter today.</div>
+    {% endif %}
+
+    <div style="margin-top:28px;padding-top:16px;border-top:1px solid #e7ebf0;color:#6b7785;font-size:12.5px">
+      {% if site_url %}<a href="{{ site_url }}" style="color:#16335c">View the full dashboard →</a><br>{% endif %}
+      Auto-generated from Google News, the Federal Register, and RSS feeds; summarized and scored by Claude.
+    </div>
+  </div>
+</body>
+</html>

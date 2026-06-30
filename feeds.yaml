@@ -1,0 +1,166 @@
+# =============================================================================
+# feeds.yaml — source + watch config for the BoomRx Daily News Digest
+# Consumed by digest.py (keys: google_news, federal_register, rss, watch)
+# Beats are mapped to the BoomRx formulary categories:
+#   HRT/TRT · Peptides · GLP-1 / Weight Loss · Sexual Health · Hair Loss ·
+#   Skincare (Cosmetic) · Wellness / Anti-Aging · Compounding/FDA · Telehealth
+#
+# Tuning notes:
+#   - Google News queries use quotes to keep phrases together; keep them tight
+#     to limit noise. Claude scores relevance 1-5, MIN_SCORE filters the page.
+#   - Verify each RSS url returns XML before relying on it (some FDA feeds move).
+#   - The `watch` list force-promotes any story matching its keywords to score 5
+#     and surfaces it in the standing watch panel even on quiet days.
+# =============================================================================
+
+google_news:
+  # --- Compounding / FDA regulatory (central to the whole portfolio) ---
+  - '"compounding pharmacy" FDA'
+  - '"503A" OR "503B" compounding'
+  - '"bulks list" compounding FDA'
+  - 'Pharmacy Compounding Advisory Committee PCAC'
+  - 'compounded drug FDA warning letter'
+  - 'Alliance for Pharmacy Compounding'
+  - '"demonstrably difficult to compound"'
+
+  # --- GLP-1 / medical weight loss ---
+  - 'compounded semaglutide'
+  - 'compounded tirzepatide'
+  - 'semaglutide tirzepatide 503B bulks list'
+  - 'GLP-1 compounding FDA'
+  - 'GLP-1 weight loss telehealth FDA'
+  - 'liraglutide compounding'
+  - 'phentermine weight loss'
+  - 'metformin weight loss longevity'
+
+  # --- Peptides ---
+  - 'BPC-157 FDA'
+  - 'TB-500 thymosin beta-4 compounding'
+  - 'compounded peptides FDA 503A'
+  - 'KPV OR "MOTS-c" peptide FDA'
+  - 'CJC-1295 ipamorelin'
+  - 'tesamorelin'
+  - 'GHK-Cu copper peptide'
+  - 'sermorelin OR ipamorelin peptide therapy'
+  - 'IGF-1 LR3 peptide'
+
+  # --- HRT / TRT ---
+  - 'testosterone replacement therapy FDA'
+  - 'TRAVERSE testosterone trial'
+  - 'compounded testosterone'
+  - 'estradiol patch shortage'
+  - 'menopause hormone therapy FDA'
+  - 'bioidentical hormone therapy compounding'
+  - 'enclomiphene OR clomiphene testosterone'
+  - 'anastrozole estrogen men'
+  - 'compounded thyroid liothyronine NDMA'
+
+  # --- Sexual health ---
+  - 'bremelanotide PT-141'
+  - 'compounded sildenafil OR tadalafil'
+  - 'Trimix erectile dysfunction compounding'
+  - 'oxytocin compounded sexual health'
+
+  # --- Hair loss ---
+  - 'compounded topical finasteride FDA'
+  - 'oral minoxidil hair loss'
+  - 'dutasteride hair loss'
+  - 'finasteride side effects FDA'
+
+  # --- Skincare / cosmetic ---
+  - 'hydroquinone FDA OR shortage'
+  - 'compounded tretinoin'
+  - 'compounded skincare prescription'
+
+  # --- Wellness / anti-aging ---
+  - 'NAD+ therapy'
+  - 'methylene blue supplement FDA'
+  - 'glutathione injection'
+  - 'low-dose naltrexone LDN'
+  - 'compounded ketamine telehealth'
+
+  # --- Telehealth competitors ---
+  - 'Hims Hers compounded'
+  - 'Ro telehealth weight loss'
+  - 'Novo Nordisk Hims compounding'
+  - 'telehealth compounded drug lawsuit'
+
+federal_register:
+  # FDA agency filter is applied in digest.py; these are the search terms.
+  - 'semaglutide'
+  - 'tirzepatide'
+  - 'liraglutide'
+  - 'bulk drug substances compounding'
+  - 'Pharmacy Compounding Advisory Committee'
+  - '503A'
+  - '503B outsourcing facility'
+  - 'testosterone'
+  - 'estradiol'
+  - 'compounding'
+  - 'peptide'
+  - 'finasteride'
+  - 'hydroquinone'
+
+rss:
+  # Verify each URL returns XML before trusting it; FDA occasionally relocates feeds.
+  - name: FDA Press Announcements
+    url: https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/press-releases/rss.xml
+  - name: FDA MedWatch Safety Alerts
+    url: https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/medwatch/rss.xml
+  - name: FDA Recalls
+    url: https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/recalls/rss.xml
+  - name: FDA Drug Safety Communications
+    url: https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/drugs/rss.xml
+  # Trade/industry (optional — add or remove as you like):
+  # - name: Alliance for Pharmacy Compounding
+  #   url: https://a4pc.org/feed/
+
+# -----------------------------------------------------------------------------
+# Standing watch list — high-stakes items kept visible until they resolve.
+# Any ingested story whose text contains a keyword is promoted to score 5 and
+# shown in the watch panel. Review the `note` text periodically and prune items
+# once the regulatory event has passed.
+# -----------------------------------------------------------------------------
+watch:
+  - label: "GLP-1 503B bulks exclusion — semaglutide / tirzepatide / liraglutide"
+    keywords: ["503B bulks", "bulks list", "semaglutide", "tirzepatide", "liraglutide", "GLP-1 compounding"]
+    note: >
+      FDA proposed (Apr 30, 2026) to permanently exclude these three from the 503B
+      bulks list — no clinical-need finding. Public comment closed ~June 30, 2026;
+      final determination pending. Highest enforcement exposure in the portfolio.
+
+  - label: "Peptide line — Category 1 decision (PCAC July 23-24, 2026)"
+    keywords: ["BPC-157", "TB-500", "thymosin", "KPV", "MOTS-c", "PCAC", "Pharmacy Compounding Advisory"]
+    note: >
+      BPC-157, TB-500, KPV, MOTS-c were pulled from Category 2 (Apr 2026) but are
+      NOT yet on Category 1 — a regulatory gray zone. PCAC reviews them July 23-24;
+      public comments to the committee were due ~July 9, 2026. This decides the
+      legal 503A compounding pathway for the peptide injectable line.
+
+  - label: "Compounded topical finasteride — informed-consent risk"
+    keywords: ["topical finasteride", "finasteride", "minoxidil finasteride"]
+    note: >
+      FDA adverse-event alert (Apr 2025): ED, depression, suicidal ideation, brain
+      fog — some persisting after discontinuation. No FDA-approved topical labeling.
+      Document side-effect counseling and pregnancy-transfer warnings.
+
+  - label: "Estradiol patch shortage — HRT demand surge"
+    keywords: ["estradiol patch", "estrogen patch", "menopause hormone", "HRT shortage"]
+    note: >
+      All major estradiol patches backordered through at least late 2026 after the
+      Nov 2025 black-box removal drove a ~72% demand surge. Opportunity for
+      compounded estradiol cream / troche / capsule alternatives.
+
+  - label: "Testosterone label expansion (TRAVERSE)"
+    keywords: ["testosterone replacement", "TRAVERSE", "hypogonadism", "testosterone label"]
+    note: >
+      FDA removed the age-related-hypogonadism limitation and signaled a pathway to
+      expand TRT labeling (low libido / idiopathic hypogonadism). Tailwind for the
+      TRT line; watch for sponsor activity and revised prescribing info.
+
+  - label: "Methylene blue — serotonin-syndrome boxed warning vs. wellness sales"
+    keywords: ["methylene blue"]
+    note: >
+      FDA-labeled boxed warning for fatal serotonin syndrome with SSRIs/SNRIs/MAOIs.
+      Booming off-label wellness demand carries real interaction risk — counsel
+      patients on concomitant antidepressants.
