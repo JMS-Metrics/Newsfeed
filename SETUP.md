@@ -1,4 +1,4 @@
-# BoomRx Daily News Digest — Setup Guide
+# Daily News Digest — Setup Guide
 
 This repo runs itself once a day on GitHub's free servers: it pulls news on your
 formulary beats, summarizes and scores each story with Claude, publishes a public
@@ -30,7 +30,7 @@ GitHub repo, (2) create three free accounts, and (3) paste in some keys. ~20 min
 
 1. Go to https://github.com and sign in (make a free account if needed).
 2. Click **+** (top right) → **New repository**.
-3. Name it `boomrx-digest`. Choose **Public** (required for a free shareable dashboard link).
+3. name it `Newsfeed`. Choose **Public** (required for a free shareable dashboard link).
 4. Click **Create repository**.
 5. On the new repo page, click **uploading an existing file**, then drag in **all the
    files from this folder** (keep the folder structure — the `templates` and
@@ -45,10 +45,13 @@ GitHub repo, (2) create three free accounts, and (3) paste in some keys. ~20 min
    - **Project URL** (looks like `https://abcd.supabase.co`)
    - **service_role** key (the secret one — *not* the "anon" key)
 
+> ⚠️ Never paste real keys into this file or any file in the repo. They go ONLY into
+> GitHub → Settings → Secrets. Keep your actual values in a password manager.
+
 ## Step 3 — Email (Resend) — free, sends you the digest
 
 1. Go to https://resend.com → sign up.
-2. **API Keys** → **Create API Key** → copy it for Step 4.
+2. **API Keys** → **Create API Key** → copy it for Step 4 (paste into GitHub Secrets, not here).
 3. For the "from" address: easiest is to use their test sender `onboarding@resend.dev`
    to start. (Later you can verify your own domain to send from `digest@boomrx...`.)
 
@@ -58,21 +61,21 @@ In your GitHub repo: **Settings → Secrets and variables → Actions → New re
 Add each of these (name on the left, your value on the right):
 
 | Secret name          | What to paste                                              |
-|----------------------|-----------------------------------------------------------|
+|----------------------|------------------------------------------------------------|
 | `ANTHROPIC_API_KEY`  | Your Anthropic API key (console.anthropic.com → API Keys)  |
-| `SUPABASE_URL`       | The Project URL from Step 2                                |
-| `SUPABASE_KEY`       | The **service_role** key from Step 2                       |
-| `RESEND_API_KEY`     | The key from Step 3                                        |
-| `DIGEST_EMAIL_TO`    | Your email (commas for multiple people)                   |
-| `DIGEST_EMAIL_FROM`  | `onboarding@resend.dev` to start                          |
-| `SITE_BASE_URL`      | `https://YOURUSERNAME.github.io/boomrx-digest`            |
+| `SUPABASE_URL`       | Your Supabase Project URL (from Step 2)                    |
+| `SUPABASE_KEY`       | Your Supabase **service_role** key (from Step 2)           |
+| `RESEND_API_KEY`     | Your Resend API key (from Step 3)                          |
+| `DIGEST_EMAIL_TO`    | Your email (commas for multiple people)                    |
+| `DIGEST_EMAIL_FROM`  | `onboarding@resend.dev` to start                           |
+| `SITE_BASE_URL`      | `https://jms-metrics.github.io/Newsfeed`             |
 
 ## Step 5 — Turn on the dashboard (GitHub Pages)
 
 1. Repo → **Settings → Pages**.
 2. Under **Source**, choose **Deploy from a branch**.
 3. Branch: **main**, folder: **/docs**. Click **Save**.
-4. After the first run, your shareable link is: `https://YOURUSERNAME.github.io/boomrx-digest`
+4. After the first run, your shareable link is: `https://jms-metrics.github.io/Newsfeed`
 
 ## Step 6 — Run it once to test
 
@@ -96,7 +99,4 @@ After this, it runs **automatically every morning** (7am Eastern). Nothing more 
 
 ## If something breaks
 
-- Open **Actions** → click the failed run (red X) → read the last red line. It usually
-  names the missing/incorrect secret.
-- Most common issue: using the Supabase **anon** key instead of **service_role**, or a
-  typo in a secret name (they must match the table above exactly).
+- Open **Actions** → click the failed run (red X) → read the last

@@ -1,7 +1,7 @@
 # =============================================================================
-# feeds.yaml — source + watch config for the BoomRx Daily News Digest
+# feeds.yaml — source + watch config for the Daily News Digest
 # Consumed by digest.py (keys: google_news, federal_register, rss, watch)
-# Beats are mapped to the BoomRx formulary categories:
+# Beats are mapped to the formulary categories:
 #   HRT/TRT · Peptides · GLP-1 / Weight Loss · Sexual Health · Hair Loss ·
 #   Skincare (Cosmetic) · Wellness / Anti-Aging · Compounding/FDA · Telehealth
 #

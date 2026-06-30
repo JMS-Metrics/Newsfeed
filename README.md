@@ -1,4 +1,4 @@
-# JMS Daily News Digest
+# Daily News Digest
 
 A self-hosted daily news digest for the beats you care about — **compounding
 pharmacies & compounded products, peptides, HRT/TRT, GLP-1 / medical weight

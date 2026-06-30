@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Daily news digest for JMS.
+Daily news digest.
 
 Beats: compounding pharmacies & compounded products, peptides, HRT/TRT,
 GLP-1 / medical weight loss, telehealth companies.
@@ -54,7 +54,7 @@ DOCS  = os.path.join(HERE, "docs")
 ARCH  = os.path.join(DOCS, "archive")
 TABLE = "news_items"
 
-# Fixed display order, aligned to the BoomRx formulary categories.
+# Fixed display order, aligned to the formulary categories.
 CATEGORY_ORDER = [
     "Regulatory/FDA",
     "Peptides",
@@ -250,7 +250,7 @@ def insert_items(rows: list[dict]) -> None:
 # --------------------------------------------------------------------------- #
 # 3. Summarize + categorize + score with Claude
 # --------------------------------------------------------------------------- #
-SYSTEM_PROMPT = """You are a pharma-industry news analyst preparing a daily digest for BoomRx, a \
+SYSTEM_PROMPT = """You are a pharma-industry news analyst preparing a daily digest for a \
 compounding pharmacy. The relevant beats, drawn from their formulary, are: compounded peptides \
 (BPC-157, TB-500, GHK-Cu, CJC-1295/ipamorelin, sermorelin, tesamorelin, MOTS-c, KPV, PT-141, \
 thymosin alpha-1, pentadeca arginate); GLP-1 / medical weight loss (semaglutide, tirzepatide, \
