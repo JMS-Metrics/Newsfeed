@@ -125,42 +125,49 @@ watch:
   - label: "GLP-1 503B bulks exclusion — semaglutide / tirzepatide / liraglutide"
     keywords: ["503B bulks", "bulks list", "semaglutide", "tirzepatide", "liraglutide", "GLP-1 compounding"]
     note: >
-      FDA proposed (Apr 30, 2026) to permanently exclude these three from the 503B
-      bulks list — no clinical-need finding. Public comment closed ~June 30, 2026;
-      final determination pending. Highest enforcement exposure in the portfolio.
+      UPDATE (Aug 2026): Public comment on FDA's proposal to permanently exclude
+      these three from the 503B bulks list CLOSED July 30, 2026. FDA is now reviewing
+      comments; no final rule and no announced timeline. Still the highest enforcement
+      exposure in the portfolio — watch for the final determination.
 
-  - label: "Peptide line — Category 1 decision (PCAC July 23-24, 2026)"
-    keywords: ["BPC-157", "TB-500", "thymosin", "KPV", "MOTS-c", "PCAC", "Pharmacy Compounding Advisory"]
+  - label: "Peptide line — PCAC recommended 4 key peptides for the 503A bulks list"
+    keywords: ["BPC-157", "TB-500", "thymosin", "KPV", "MOTS-c", "PCAC", "Pharmacy Compounding Advisory", "Semax", "Epitalon"]
     note: >
-      BPC-157, TB-500, KPV, MOTS-c were pulled from Category 2 (Apr 2026) but are
-      NOT yet on Category 1 — a regulatory gray zone. PCAC reviews them July 23-24;
-      public comments to the committee were due ~July 9, 2026. This decides the
-      legal 503A compounding pathway for the peptide injectable line.
+      UPDATE (Jul 23-24, 2026 PCAC): The committee voted to RECOMMEND BPC-157, KPV,
+      TB-500 (8-6) and MOTS-c (7-5) for the 503A bulks list — plus Semax and Epitalon;
+      it rejected DSIP/emideltide. Important: this is only a recommendation. It does
+      NOT change legal status or make them compoundable yet — FDA must still issue a
+      final decision, and no deadline has been announced. Still a gray zone until then.
 
   - label: "Compounded topical finasteride — informed-consent risk"
     keywords: ["topical finasteride", "finasteride", "minoxidil finasteride"]
     note: >
-      FDA adverse-event alert (Apr 2025): ED, depression, suicidal ideation, brain
-      fog — some persisting after discontinuation. No FDA-approved topical labeling.
-      Document side-effect counseling and pregnancy-transfer warnings.
+      Status unchanged (as of Aug 2026): FDA's Apr 2025 adverse-event alert remains in
+      effect (ED, depression, suicidal ideation, brain fog; some persisting after
+      discontinuation). Still no FDA-approved topical labeling. Keep documenting
+      side-effect counseling and pregnancy-transfer warnings.
 
   - label: "Estradiol patch shortage — HRT demand surge"
     keywords: ["estradiol patch", "estrogen patch", "menopause hormone", "HRT shortage"]
     note: >
-      All major estradiol patches backordered through at least late 2026 after the
-      Nov 2025 black-box removal drove a ~72% demand surge. Opportunity for
-      compounded estradiol cream / troche / capsule alternatives.
+      Still unresolved (Aug 2026): all major brands (Climara, Vivelle-Dot, Teva/Mylan
+      generics) remain backordered; ASHP is tracking it though FDA has not officially
+      declared a shortage. Expected to persist through end of 2026, possibly longer.
+      Ongoing opportunity for compounded estradiol cream / troche / capsule / gel.
 
-  - label: "Testosterone label expansion (TRAVERSE)"
-    keywords: ["testosterone replacement", "TRAVERSE", "hypogonadism", "testosterone label"]
+  - label: "Testosterone labeling change (TRAVERSE) + indication expansion"
+    keywords: ["testosterone replacement", "TRAVERSE", "hypogonadism", "testosterone label", "idiopathic hypogonadism"]
     note: >
-      FDA removed the age-related-hypogonadism limitation and signaled a pathway to
-      expand TRT labeling (low libido / idiopathic hypogonadism). Tailwind for the
-      TRT line; watch for sponsor activity and revised prescribing info.
+      UPDATE (2026): FDA issued class-wide testosterone labeling changes — TRAVERSE
+      results added and cardiovascular boxed-warning language removed. Separately, FDA
+      is encouraging sponsors to file sNDAs to expand TRT to low libido in idiopathic
+      hypogonadism (contact deadline was Apr 30, 2026). Net tailwind for the TRT line.
 
   - label: "Methylene blue — serotonin-syndrome boxed warning vs. wellness sales"
     keywords: ["methylene blue"]
     note: >
-      FDA-labeled boxed warning for fatal serotonin syndrome with SSRIs/SNRIs/MAOIs.
-      Booming off-label wellness demand carries real interaction risk — counsel
-      patients on concomitant antidepressants.
+      Status ongoing (Aug 2026): FDA-labeled boxed warning for fatal serotonin syndrome
+      with SSRIs/SNRIs/MAOIs still stands; FDA treats methylene blue supplements as
+      unapproved new drugs and has issued warning letters over health claims. Booming
+      off-label wellness demand carries real interaction risk — counsel on concomitant
+      antidepressants.
