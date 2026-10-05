@@ -18,7 +18,8 @@ create table if not exists public.news_items (
 create index if not exists news_items_created_at_idx on public.news_items (created_at desc);
 create index if not exists news_items_category_idx   on public.news_items (category);
 
--- The pipeline connects with the Supabase service_role key, which bypasses RLS.
--- Leaving RLS disabled is fine for a private, server-only table. If you prefer to
--- enable it, do so and rely on the service_role key (it ignores RLS policies):
--- alter table public.news_items enable row level security;
+-- Enable Row-Level Security. With RLS ON and NO policies defined, the anon and
+-- publishable keys get zero access (this is a private, server-only table). The
+-- pipeline is unaffected: digest.py uses the Supabase SECRET (service_role) key,
+-- which bypasses RLS. This clears the "rls_disabled_in_public" security warning.
+alter table public.news_items enable row level security;

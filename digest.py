@@ -57,6 +57,7 @@ TABLE = "news_items"
 # Fixed display order, aligned to the formulary categories.
 CATEGORY_ORDER = [
     "Regulatory/FDA",
+    "Compounding Pharmacies",
     "Peptides",
     "GLP-1 / Weight Loss",
     "HRT/TRT",
@@ -262,11 +263,15 @@ regulation and telehealth-competitor news are central.
 
 You will receive a JSON array of news items. For EACH item, return an object with:
   - "id": copy the id exactly
-  - "category": exactly one of ["Regulatory/FDA","Peptides","GLP-1 / Weight Loss","HRT/TRT",
-    "Sexual Health","Hair Loss","Skincare","Wellness / Anti-Aging","Telehealth","Other"].
-    Use "Regulatory/FDA" for FDA actions, rules, bulks-list/PCAC decisions, enforcement, or
-    legislation even when drug-specific. Use "Telehealth" for competitor/company news (Hims,
-    Ro, etc.) not tied to one drug class.
+  - "category": exactly one of ["Regulatory/FDA","Compounding Pharmacies","Peptides",
+    "GLP-1 / Weight Loss","HRT/TRT","Sexual Health","Hair Loss","Skincare",
+    "Wellness / Anti-Aging","Telehealth","Other"].
+    Use "Regulatory/FDA" for FDA actions, rules, bulks-list/PCAC decisions, or legislation that
+    is not about one named facility. Use "Compounding Pharmacies" when the subject is a specific
+    compounding pharmacy or 503B outsourcing facility (e.g., Empower, Olympia, Fagron, Wells,
+    Strive, ProRx, QuVa) — FDA warning letters, Form 483s, inspections, recalls, lawsuits, or
+    business/M&A news; prefer this over "Regulatory/FDA" whenever a named pharmacy is the focus.
+    Use "Telehealth" for competitor/company news (Hims, Ro, etc.) not tied to one drug class.
   - "summary": one factual sentence, <= 30 words, plain language, no hype. Paraphrase only.
   - "score": integer 1-5 for relevance to the beats above. 5 = core, directly relevant
     industry news; 3 = tangential but on-topic; 1 = off-topic noise.
@@ -409,7 +414,7 @@ def send_email(html_body: str, date_str: str, total: int):
         json={
             "from": EMAIL_FROM,
             "to": EMAIL_TO,
-            "subject": f"Daily Digest — {date_str} ({total} stories)",
+            "subject": f"Weekly Digest — {date_str} ({total} stories)",
             "html": html_body,
         },
         timeout=60,
@@ -421,6 +426,30 @@ def send_email(html_body: str, date_str: str, total: int):
 
 
 # --------------------------------------------------------------------------- #
+# Weekly window — only show articles published in the prior complete Mon-Sun week
+# --------------------------------------------------------------------------- #
+def prior_week_window(ref: dt.datetime) -> tuple[dt.datetime, dt.datetime]:
+    """[start, end): the Monday-through-Sunday week that just ended before `ref`.
+    Run on a Monday, this is last Monday 00:00 UTC up to (not incl.) this Monday 00:00."""
+    this_monday = (ref - dt.timedelta(days=ref.weekday())).replace(
+        hour=0, minute=0, second=0, microsecond=0)
+    return this_monday - dt.timedelta(days=7), this_monday
+
+
+def published_in_window(item: dict, start: dt.datetime, end: dt.datetime) -> bool:
+    ts = item.get("published_at")
+    if not ts:
+        return False            # no publish date -> can't confirm it's this week, exclude
+    try:
+        d = dt.datetime.fromisoformat(ts)
+    except ValueError:
+        return False
+    if d.tzinfo is None:
+        d = d.replace(tzinfo=dt.timezone.utc)
+    return start <= d < end
+
+
+# --------------------------------------------------------------------------- #
 # Main
 # --------------------------------------------------------------------------- #
 def main():
@@ -428,19 +457,27 @@ def main():
         cfg = yaml.safe_load(fh)
     watch = cfg.get("watch", []) or []
 
-    all_items = ingest(cfg)
-    ids = [i["id"] for i in all_items]
-    seen = existing_ids(ids)
-    new_items = [i for i in all_items if i["id"] not in seen]
-    print(f"{len(new_items)} new items (of {len(all_items)} ingested)")
+    win_start, win_end = prior_week_window(now_utc())
 
-    date_str = now_utc().strftime("%B %d, %Y")
+    all_items = ingest(cfg)
+    before = len(all_items)
+    all_items = [i for i in all_items if published_in_window(i, win_start, win_end)]
+    print(f"  -> {len(all_items)} of {before} items published in "
+          f"{win_start:%Y-%m-%d}..{win_end:%Y-%m-%d}")
+
+    ids = [i["id"] for i in all_items]
+    seen = existing_ids(ids) if ids else set()
+    new_items = [i for i in all_items if i["id"] not in seen]
+    print(f"{len(new_items)} new items (of {len(all_items)} in-window)")
+
+    # e.g. "Sep 29 – Oct 05, 2026"
+    date_str = f"{win_start:%b %d} – {(win_end - dt.timedelta(days=1)):%b %d, %Y}"
     generated_at = now_utc().strftime("%Y-%m-%d %H:%M UTC")
 
     if not new_items:
         # still refresh the page (watch panel stays visible), but no email
         write_outputs([], date_str, generated_at, 0, watch=watch)
-        print("No new items today. Page refreshed; no email sent.")
+        print("No new items this week. Page refreshed; no email sent.")
         return
 
     enriched = enrich(new_items)

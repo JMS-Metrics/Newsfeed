@@ -23,6 +23,18 @@ google_news:
   - 'Alliance for Pharmacy Compounding'
   - '"demonstrably difficult to compound"'
 
+  # --- Compounding pharmacies / competitors (named-facility news) ---
+  - 'Empower Pharmacy FDA'
+  - 'Olympia Pharmaceuticals FDA'
+  - 'Fagron FDA warning letter'
+  - 'Wells Pharmacy FDA'
+  - 'Strive Pharmacy'
+  - 'QuVa Pharma FDA'
+  - 'compounding pharmacy FDA warning letter'
+  - '503B outsourcing facility warning letter'
+  - 'compounding pharmacy Form 483 inspection'
+  - 'compounding pharmacy recall sterility'
+
   # --- GLP-1 / medical weight loss ---
   - 'compounded semaglutide'
   - 'compounded tirzepatide'
@@ -122,6 +134,15 @@ rss:
 # once the regulatory event has passed.
 # -----------------------------------------------------------------------------
 watch:
+  - label: "Empower Pharmacy — FDA warning letter (Sep 18, 2026)"
+    keywords: ["Empower Pharmacy", "Empower Clinic Services"]
+    note: >
+      FDA's third warning letter to Empower over compounded GLP-1s (semaglutide/tirzepatide):
+      cites 503A "copies of commercially available" products, weak/pre-generated "significant
+      difference" documentation, aseptic-processing failures, and media-fill data-integrity
+      gaps. Bellwether for how FDA will treat large 503A compounders — watch the response and
+      any follow-on enforcement across the sector.
+
   - label: "GLP-1 503B bulks exclusion — semaglutide / tirzepatide / liraglutide"
     keywords: ["503B bulks", "bulks list", "semaglutide", "tirzepatide", "liraglutide", "GLP-1 compounding"]
     note: >

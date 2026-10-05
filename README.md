@@ -1,4 +1,4 @@
-# Daily News Digest
+# Weekly News Digest
 
 A self-hosted daily news digest for the beats you care about — **compounding
 pharmacies & compounded products, peptides, HRT/TRT, GLP-1 / medical weight
@@ -51,7 +51,7 @@ their onboarding `onboarding@resend.dev` for testing), and create an API key.
 branch `main`, folder **/docs**. After the first run, the dashboard lives at
 `https://USER.github.io/REPO/`.
 
-**6. First run.** Actions tab → "Daily News Digest" → **Run workflow**.
+**6. First run.** Actions tab → "Weekly News Digest" → **Run workflow**.
 > The first run treats *everything* it finds as new, so expect a large digest
 > once. Every run after that only shows genuinely new stories.
 
