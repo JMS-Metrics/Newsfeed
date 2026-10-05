@@ -1,9 +1,10 @@
-name: Daily News Digest
+name: Weekly News Digest
 
 on:
   schedule:
-    # 11:00 UTC = 7:00 AM Eastern (EDT) / 6:00 AM (EST). Adjust as needed.
-    - cron: "0 11 * * *"
+    # Mondays at 11:00 UTC = 7:00 AM Eastern (EDT) / 6:00 AM (EST).
+    # Field order: min hour day-of-month month day-of-week (1 = Monday).
+    - cron: "0 11 * * 1"
   workflow_dispatch: {}        # lets you trigger a run manually from the Actions tab
 
 permissions:
@@ -44,5 +45,5 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/
-          git commit -m "Daily digest $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+          git commit -m "Weekly digest $(date -u +%Y-%m-%d)" || echo "No changes to commit"
           git push
